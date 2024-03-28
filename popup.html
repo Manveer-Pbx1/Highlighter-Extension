@@ -15,8 +15,16 @@
 <script>
     const targetParagraph = document.getElementById('paragraph');
     targetParagraph.addEventListener('mouseup', ()=>{
-        const highlight = window.getSelection().toString();
-        console.log(highlight);
+        const highlight = window.getSelection();
+        const range = highlight.getRangeAt(0);
+
+        const span = document.createElement('span');
+        span.style.backgroundColor = 'yellow';
+        span.style.borderRadius = '50px';
+        span.appendChild(range.extractContents());
+        range.insertNode(span);
+
+        highlight.removeAllRanges();
     })
 </script>
 </html>
