@@ -1,0 +1,26 @@
+{
+    "manifest_version": 2,
+    "name": "Black Background Extension",
+    "version": "1.0",
+    "description": "Change the background color of any webpage to black.",
+    "permissions": ["activeTab"],
+    "browser_action": {
+      "default_icon": {
+        "16": "download.jpg",
+        "48": "download.jpg",
+        "128": "download.jpg"
+      }
+    },
+    "icons": {
+      "16": "download.jpg",
+      "48": "download.jpg",
+      "128": "download.jpg"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "css": ["styles.css"]
+      }
+    ]
+  }
+  
