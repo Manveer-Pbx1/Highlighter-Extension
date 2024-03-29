@@ -8,23 +8,69 @@
 
 </head>
 <body>
+    <div id="dashboard">
+        <button id="color">Color</button>
+        <button id="eraser">Eraser</button>
+    </div>
     <p id="paragraph">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum illum, tenetur tempore similique eaque atque illo iure quam quod, expedita vitae quae corporis iusto obcaecati doloribus, sint impedit modi provident quaerat. Iusto sed numquam atque sequi. Ipsum dolorum nemo beatae ad. Quasi quis explicabo deserunt similique officiis tempore accusamus ullam.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius vero necessitatibus tenetur nesciunt aut eaque natus accusantium consequatur cupiditate architecto rerum, debitis maxime quibusdam, libero, labore nam non commodi sapiente? Aut iste sapiente officia pariatur tenetur vitae accusantium, ex voluptas omnis debitis aliquid enim. Explicabo magnam, officiis error enim unde inventore amet sequi reprehenderit in? Eligendi, repellat tempora pariatur inventore quo non eos eveniet distinctio ipsa illo blanditiis optio labore dignissimos aut quidem esse! Nam hic consequuntur doloribus eligendi molestias nulla magni sit vero reiciendis, consequatur repellendus est. Excepturi atque quod molestias explicabo, laboriosam quam reprehenderit odit ipsam tempora vero voluptates dolorem autem aut odio culpa voluptas dolorum vitae possimus quae placeat, quos modi soluta quaerat dignissimos. Magni ad sapiente minus molestias explicabo, deleniti minima veniam voluptatibus. Enim incidunt suscipit velit minus quaerat delectus perferendis cum a quis obcaecati nulla voluptatibus, voluptatum ipsum magnam error recusandae deserunt adipisci eius ad?
+        
     </p>
 </body>
 <script>
     const targetParagraph = document.getElementById('paragraph');
+    const colorButton = document.getElementById('color');
+    const eraserButton = document.getElementById('eraser');
+    let selectedColor = '';
+    colorButton.addEventListener('click', ()=>{
+        const colorDropdown = document.createElement('div');
+        colorDropdown.classList.add('colorDropdown');
+
+        const colors = ['red', 'blue', 'yellow', 'green', 'purple'];
+        let count = 0;
+        for(let i=0;i<colors.length;i++){
+            const option = document.createElement('button');
+            option.id = colors[i];
+            option.value = colors[i];
+            option.style.backgroundColor = colors[i];
+            option.addEventListener('click',()=>{
+                selectedColor = colors[i];
+            })
+            colorDropdown.appendChild(option);
+        }
+        
+        document.body.appendChild(colorDropdown);
+    });
+    // Add event listener for the Eraser button 
+    eraserButton.addEventListener('click', ()=>{
+        targetParagraph.style.backgroundColor = 'white';
+    });
+    
     targetParagraph.addEventListener('mouseup', ()=>{
-        const highlight = window.getSelection();
-        const range = highlight.getRangeAt(0);
-
-        const span = document.createElement('span');
-        span.style.backgroundColor = 'yellow';
-        span.style.borderRadius = '50px';
-        span.appendChild(range.extractContents());
-        range.insertNode(span);
-
-        highlight.removeAllRanges();
+        highlightText();
     })
+
+    function highlightText(){
+        const highlight = window.getSelection();
+        if(!highlight.isCollapsed){
+
+            const range = highlight.getRangeAt(0);
+    
+            const span = document.createElement('span');
+            span.style.backgroundColor = selectedColor || 'skyblue';
+            span.style.borderRadius = '50px';
+            span.appendChild(range.extractContents());
+            range.insertNode(span);
+    
+            highlight.removeAllRanges();
+        }
+    }
+
+    // function applyHighlightColor(color){
+    //     const highlightedText = document.querySelectorAll('#paragraph span');
+    //     highlightedText.forEach((text)=>{
+    //         text.style.backgroundColor = color;
+    //     })
+    // }
 </script>
 </html>
