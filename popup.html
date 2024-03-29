@@ -5,7 +5,42 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <link rel="stylesheet" href="styles.css">
-
+        <style>
+            ::selection{
+    background-color: skyblue;
+    color: #333;
+}
+#dashboard{
+    margin: auto;
+    align-items: center;
+    display: inline-block;
+    justify-content: center;
+    text-align: center;
+    background-color: #333;
+    border-radius: 50px;
+    width: 100%;
+}
+button{
+    height: 20px;
+    width: 25px;
+    background-color: antiquewhite;
+    cursor: pointer;
+    gap: 15px;
+    width: auto;
+}
+button:hover{
+    opacity: 0.6;
+}
+.colorDropdown{
+        display : block;
+        position : absolute;
+        top : 30px;
+        left : 580px;
+        z-index: 1000;
+        background-color: white;
+        overflow : auto;
+}
+        </style>
     </head>
     <body>
         <div id="dashboard">
