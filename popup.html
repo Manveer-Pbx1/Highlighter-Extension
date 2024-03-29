@@ -1,29 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="styles.css">
 
-</head>
-<body>
-    <div id="dashboard">
-        <button id="color">Color</button>
-        <button id="eraser">Eraser</button>
-    </div>
-    <p id="paragraph">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius vero necessitatibus tenetur nesciunt aut eaque natus accusantium consequatur cupiditate architecto rerum, debitis maxime quibusdam, libero, labore nam non commodi sapiente? Aut iste sapiente officia pariatur tenetur vitae accusantium, ex voluptas omnis debitis aliquid enim. Explicabo magnam, officiis error enim unde inventore amet sequi reprehenderit in? Eligendi, repellat tempora pariatur inventore quo non eos eveniet distinctio ipsa illo blanditiis optio labore dignissimos aut quidem esse! Nam hic consequuntur doloribus eligendi molestias nulla magni sit vero reiciendis, consequatur repellendus est. Excepturi atque quod molestias explicabo, laboriosam quam reprehenderit odit ipsam tempora vero voluptates dolorem autem aut odio culpa voluptas dolorum vitae possimus quae placeat, quos modi soluta quaerat dignissimos. Magni ad sapiente minus molestias explicabo, deleniti minima veniam voluptatibus. Enim incidunt suscipit velit minus quaerat delectus perferendis cum a quis obcaecati nulla voluptatibus, voluptatum ipsum magnam error recusandae deserunt adipisci eius ad?
-        
-    </p>
-</body>
-<script>
+    </head>
+    <body>
+        <div id="dashboard">
+            <button id="color">Color</button>
+            <button id="delete">Delete</button>
+            <button id="eraser" onclick="eraseHighlight()">Erase</button>
+        </div>
+        <p id="paragraph">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius vero
+            necessitatibus tenetur nesciunt aut eaque natus accusantium
+            consequatur cupiditate architecto rerum, debitis maxime quibusdam,
+            libero, labore nam non commodi sapiente? Aut iste sapiente officia
+            pariatur tenetur vitae accusantium, ex voluptas omnis debitis
+            aliquid enim. Explicabo magnam, officiis error enim unde inventore
+            amet sequi reprehenderit in? Eligendi, repellat tempora pariatur
+            inventore quo non eos eveniet distinctio ipsa illo blanditiis optio
+            labore dignissimos aut quidem esse! Nam hic consequuntur doloribus
+            eligendi molestias nulla magni sit vero reiciendis, consequatur
+            repellendus est. Excepturi atque quod molestias explicabo,
+            laboriosam quam reprehenderit odit ipsam tempora vero voluptates
+            dolorem autem aut odio culpa voluptas dolorum vitae possimus quae
+            placeat, quos modi soluta quaerat dignissimos. Magni ad sapiente
+            minus molestias explicabo, deleniti minima veniam voluptatibus. Enim
+            incidunt suscipit velit minus quaerat delectus perferendis cum a
+            quis obcaecati nulla voluptatibus, voluptatum ipsum magnam error
+            recusandae deserunt adipisci eius ad?
+
+        </p>
+    </body>
+    <script>
     const targetParagraph = document.getElementById('paragraph');
     const colorButton = document.getElementById('color');
+    const deleteButton = document.getElementById('delete');
     const eraserButton = document.getElementById('eraser');
     let selectedColor = '';
+    let isColorDropdownOpen = false;
+    let colorDropdown;
     colorButton.addEventListener('click', ()=>{
-        const colorDropdown = document.createElement('div');
+        if(isColorDropdownOpen){
+            colorDropdown.remove();
+            isColorDropdownOpen = false;
+        } else {
+        isColorDropdownOpen = true;
+        colorDropdown = document.createElement('div');
         colorDropdown.classList.add('colorDropdown');
 
         const colors = ['red', 'blue', 'yellow', 'green', 'purple'];
@@ -40,15 +66,14 @@
         }
         
         document.body.appendChild(colorDropdown);
+    }
     });
     // Add event listener for the Eraser button 
-    eraserButton.addEventListener('click', ()=>{
-        targetParagraph.style.backgroundColor = 'white';
+    deleteButton.addEventListener('click', ()=>{
+        removeHighlight();
     });
     
-    targetParagraph.addEventListener('mouseup', ()=>{
-        highlightText();
-    })
+   
 
     function highlightText(){
         const highlight = window.getSelection();
@@ -57,7 +82,7 @@
             const range = highlight.getRangeAt(0);
     
             const span = document.createElement('span');
-            span.style.backgroundColor = selectedColor || 'skyblue';
+            span.style.backgroundColor = selectedColor || 'skyblue'
             span.style.borderRadius = '50px';
             span.appendChild(range.extractContents());
             range.insertNode(span);
@@ -66,11 +91,24 @@
         }
     }
 
-    // function applyHighlightColor(color){
-    //     const highlightedText = document.querySelectorAll('#paragraph span');
-    //     highlightedText.forEach((text)=>{
-    //         text.style.backgroundColor = color;
-    //     })
-    // }
+    function removeHighlight(){
+        const highlights = document.querySelectorAll('span');
+        highlights.forEach(highlight=>{
+            highlight.outerHTML = highlight.innerHTML;
+        })
+    }
+
+    function eraseHighlight() {
+    selectedColor = 'white';
+    }
+
+
+    eraserButton.addEventListener('click', ()=>{
+        eraseHighlight();
+    })
+
+    targetParagraph.addEventListener('mouseup', ()=>{
+        highlightText();
+    })
 </script>
 </html>
